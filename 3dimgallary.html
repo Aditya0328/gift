@@ -39,8 +39,8 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: 100px;
-      height: 150px;
+      width: 150px;
+      height: 200px;
       object-fit: cover;
       transform-style: preserve-3d;
       border-radius: 10px;
@@ -111,7 +111,7 @@
 
     function updateImages() {
       // Reduce translateZ to bring images closer together
-  const gap = window.innerWidth <= 600 ? 120 : 180; // even smaller gap for mobile and desktop
+  const gap = window.innerWidth <= 600 ? 160 : 220; // slightly increased gap for mobile and desktop
       for (let i = 0; i < total; i++) {
         images[i].style.transform =
           `rotateY(${i * angle + rotationY}deg) translateZ(${gap}px)`;
