@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For My Favorite Person</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#fbd3e9; /* pink */
+      --bg2:#bbf0ff; /* soft blue */
+      --grad1: linear-gradient(135deg,#ff9bd2, #8a7dff);
+      --grad2: linear-gradient(135deg,#ffd1e6,#c4b5ff);
+      --card: #ffffffee;
+      --text:#333;
+      --muted:#6b7280;
+      --shadow: 0 20px 50px rgba(0,0,0,.12);
+      --radius: 28px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text);
+      background: radial-gradient( circle at 30% 10%, #ffe6f2 0%, #ffe6f2 25%, #ffeaf7 26%, #e9e5ff 50%, #e3f3ff 75%, #f8faff 100% );
+      background-attachment: fixed;
+      overflow:hidden; /* each screen controls its own scroll */
+    }
+    .app{position:relative; height:100dvh; width:100%;}/* Gradient header doodle */
+.halo{position:absolute; inset:auto 0 0 0; height:40%; filter:blur(40px); pointer-events:none; opacity:.6; background: radial-gradient( 1200px 600px at 85% 10%, rgba(173,134,255,.5), transparent 60% ), radial-gradient( 1200px 600px at 15% 20%, rgba(255,170,210,.5), transparent 60% );}
+
+/* Screens */
+.screen{position:absolute; inset:0; padding:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; opacity:0; transform:translateY(20px) scale(.98); pointer-events:none; transition:opacity .5s ease, transform .5s ease;}
+.screen.active{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
+
+.title{font-weight:800; font-size:clamp(26px, 6vw, 42px); text-align:center; line-height:1.1; letter-spacing:.2px; color:#5a2e8a;}
+.subtitle{font-weight:400; font-size:clamp(14px, 3.5vw, 18px); color:#6b4ca8; text-align:center; margin-top:-8px}
+
+.circle{
+  width:160px; height:160px; border-radius:50%; display:grid; place-items:center; background:var(--grad2);
+  box-shadow:0 10px 30px rgba(138,125,255,.35), inset 0 -8px 18px rgba(255,255,255,.7);
+  position:relative;
+  animation:softGlow 3.5s ease-in-out infinite;
+}
+@keyframes softGlow{0%,100%{filter:drop-shadow(0 6px 22px rgba(138,125,255,.35))}50%{filter:drop-shadow(0 12px 32px rgba(255,155,210,.5))}}
+
+.sticker{font-size:64px;}
+
+.card{
+  width:min(900px, 92vw);
+  max-height:62dvh; overflow:auto; padding:26px 22px; background:var(--card);
+  border-radius:var(--radius); box-shadow:var(--shadow); backdrop-filter: blur(6px);
+}
+.card p{font-size:clamp(15px, 3.8vw, 20px); line-height:1.9; margin:0 0 18px 0; color:#3a314f}
+
+/* Buttons */
+.btn{
+  border:none; outline:none; cursor:pointer; padding:16px 26px; border-radius:40px; font-weight:800; font-size:clamp(15px, 3.8vw, 20px);
+  color:#fff; background:var(--grad1); box-shadow:0 14px 30px rgba(137,125,255,.35);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+
+/* Carousel */
+.carousel{width:min(680px, 92vw); background:linear-gradient(135deg, #e7d9ff, #ffd7eb); padding:14px; border-radius:24px; box-shadow:var(--shadow);}
+.frame{position:relative; aspect-ratio: 1 / 1; overflow:hidden; border-radius:20px;}
+.frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:20px; transition:opacity .5s ease;}
+.navBtn{position:absolute; top:50%; transform:translateY(-50%); background:#ffffffcc; border:none; width:46px; height:46px; border-radius:50%; display:grid; place-items:center; font-size:22px; cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,.15)}
+.navBtn.left{left:10px}
+.navBtn.right{right:10px}
+
+/* Final Big Message */
+.final{ text-align:center; color:#fff; padding:0 22px; }
+.final h1{font-size: clamp(32px, 8vw, 54px); line-height:1.1; margin:0 0 12px 0}
+.final p{font-size:clamp(14px, 3.5vw, 20px); opacity:.95}
+
+/* Gradient background swap for last screens */
+.purple{
+  background: radial-gradient( 1200px 800px at 80% -10%, #aa99ff 0%, transparent 55% ),
+              radial-gradient( 1200px 800px at 10% 110%, #ff9bd2 0%, transparent 60% ),
+              linear-gradient(135deg, #6b59ff, #c5548f) !important;
+}
+
+/* Tiny corner hearts */
+.corner-heart{
+  position:absolute; top:14px; right:18px; width:18px; height:18px; background:var(--grad1); transform:rotate(45deg); border-radius:4px; box-shadow:0 6px 14px rgba(0,0,0,.15)
+}
+.corner-heart::before,.corner-heart::after{content:""; position:absolute; width:18px;height:18px; background:var(--grad1); border-radius:50%}
+.corner-heart::before{left:-9px;}
+.corner-heart::after{top:-9px;}
+
+/* Footer credit (optional) */
+.credit{position:fixed; right:12px; bottom:10px; font-size:12px; color:#00000055}
+
+/* Hide scrollbars in cards (mobile friendly) */
+.card::-webkit-scrollbar{width:6px}
+.card::-webkit-scrollbar-thumb{background:#e5dbff; border-radius:99px}
+
+/* Responsive spacing on small phones */
+@media (max-height:680px){
+  .circle{width:130px; height:130px}
+  .card{max-height:56dvh}
+}
+
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <div class="halo" aria-hidden="true"></div><!-- SCREEN 1 -->
+<section class="screen active" id="s1" aria-label="intro">
+  <div class="circle">
+    <div class="sticker" aria-hidden="true">👋🏻</div>
+  </div>
+  <div class="title">I want to say<br/>something</div>
+  <div class="subtitle">straight from my heart 💖</div>
+  <button class="btn" data-next="#s2">Let me tell you ❤</button>
+</section>
+
+<!-- SCREEN 2 (note page 1) -->
+<section class="screen" id="s2" aria-label="note-1">
+  <div class="card">
+    <div class="corner-heart" aria-hidden="true"></div>
+    <p>beautiful dream that I never want to wake up from. You've brought so much joy, laughter, and love into my life that I can't imagine a world without you in it.</p>
+    <p>Your smile lights up my darkest days, your laugh is my favorite melody, and your love is my greatest treasure. Thank you for being you – for being patient with me, for supporting my dreams, for</p>
+  </div>
+  <button class="btn" data-next="#s3">Next ❤</button>
+</section>
+
+
+<!-- SCREEN 3 (Final Thank You) -->
+<section class="screen purple" id="s3" aria-label="final" style="justify-content:center;">
+  <div class="final">
+    <h1>Thank you for being<br/>my favorite person!</h1>
+    <p>Want to feel the magic once more?</p>
+    <button class="btn" id="reveal-message">Reveal Special Message ✨</button>
+  </div>
+</section>
+
+
+<div class="credit">Made with ❤</div>
+
+  </div>  <script>
+    const screens = Array.from(document.querySelectorAll('.screen'));
+
+    function goTo(id){
+      screens.forEach(s=>s.classList.remove('active'));
+      const el = document.querySelector(id);
+      if(!el) return; 
+      document.body.style.overflow = 'hidden';
+      el.classList.add('active');
+      document.body.classList.toggle('is-final', id==='#s3');
+    }
+
+    // navigation buttons
+    document.querySelectorAll('[data-next]').forEach(btn=>{
+      btn.addEventListener('click', () => goTo(btn.dataset.next));
+    });
+
+    // Special message button opens 3dimgallary.html
+    document.getElementById('reveal-message').addEventListener('click', function() {
+      window.location.href = '3dimgallary.html';
+    });
+
+    // Auto focus first screen on load
+    window.addEventListener('load',()=> goTo('#s1'));
+  </script></body>
+</html>

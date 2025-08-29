@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Circle Image Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      position: relative;
+      width: 600px;
+      height: 500px;
+      perspective: 1200px;
+    }
+
+    .carousel {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+    }
+
+    .carousel img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 200px;
+      height: 250px;
+      object-fit: cover;
+      transform-style: preserve-3d;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+  /* Removed auto-rotate animation */
+
+    /* Center Text */
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+      font-weight: bold;
+      color: #ff00cc;
+      text-align: center;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="center-text" style="top: 30px; left: 50%; transform: translate(-50%, 0); font-size: 32px; color: #1e90ff; z-index: 1000; position: absolute;">
+      ❤️ Happy Mother’s Day Mumma ❤️
+    </div>
+    <div class="carousel" id="carousel">
+      <!-- Replace these with your images -->
+      <img src="aditya.jpg" alt="">
+      <img src="https://picsum.photos/id/1016/200/250" alt="">
+      <img src="https://picsum.photos/id/1018/200/250" alt="">
+      <img src="https://picsum.photos/id/1020/200/250" alt="">
+      <img src="https://picsum.photos/id/1024/200/250" alt="">
+      <img src="https://picsum.photos/id/1025/200/250" alt="">
+      <img src="https://picsum.photos/id/1031/200/250" alt="">
+      <img src="https://picsum.photos/id/1033/200/250" alt="">
+    </div>
+  </div>
+
+  <script>
+    // Arrange images in a perfect circle and allow interactive rotation
+    const carousel = document.getElementById("carousel");
+    const images = carousel.getElementsByTagName("img");
+    const total = images.length;
+    const angle = 360 / total;
+    let rotationY = 0;
+
+    function updateImages() {
+      for (let i = 0; i < total; i++) {
+        images[i].style.transform =
+          `rotateY(${i * angle + rotationY}deg) translateZ(400px)`;
+      }
+    }
+    updateImages();
+
+    // Touch and mouse drag support
+    let startX = null;
+    let lastRotationY = 0;
+
+    function onPointerDown(e) {
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      lastRotationY = rotationY;
+      document.addEventListener(e.touches ? 'touchmove' : 'mousemove', onPointerMove);
+      document.addEventListener(e.touches ? 'touchend' : 'mouseup', onPointerUp);
+    }
+
+    function onPointerMove(e) {
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      const dx = x - startX;
+      rotationY = lastRotationY + dx * 0.5; // sensitivity
+      updateImages();
+    }
+
+    function onPointerUp(e) {
+      document.removeEventListener(e.touches ? 'touchmove' : 'mousemove', onPointerMove);
+      document.removeEventListener(e.touches ? 'touchend' : 'mouseup', onPointerUp);
+      startX = null;
+    }
+
+    carousel.addEventListener('mousedown', onPointerDown);
+    carousel.addEventListener('touchstart', onPointerDown);
+  </script>
+</body>
+</html>
